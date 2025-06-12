@@ -7,7 +7,8 @@ let smoothing = 0.8;
 function preload(){
   soundFormats('mp3', 'ogg');
 // Add AudioPlayer (From p5.js example:https://p5js.org/examples/imported-media-create-audio/)
-  audioPlayer = createAudio('/assets/Faith in Strangers.mp3');
+  
+  audioPlayer = createAudio('/assets/Faith_in_Strangers.mp3');
 }
 
 function setup() {
