@@ -1,4 +1,7 @@
 # Audio-Responsive Animation Based on Nasreen Mohamedi's Artwork
+Aria Xie
+yxie0369
+550008800
 
 ## Interaction Instructions
 - Click the **Play** button on the top left to start the music.  
@@ -17,7 +20,9 @@
 
 ## Inspiration
 ![An image of inspiration](assets/Inspiration.gif)
+
 [Inspiration Link](https://youtu.be/dCI32Vi-WP0?si=tmoozK0Dc4WatJ1Z)
+
 Even simple lines can change according to the audio to achieve the visualization of the audio. The artworks we choose are composed of different lines, so I can classify the line groups and make different line groups change differently according to different frequencies of the audio.
 
 ![An image of inspiration](assets/soundWave.jpg)
