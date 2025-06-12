@@ -1,6 +1,8 @@
 let scaleFactor;
 let audioPlayer;
 let fft;
+let numBins = 128;
+let smoothing = 0.8;
 
 function preload(){
   soundFormats('mp3', 'ogg');
@@ -20,7 +22,7 @@ function setup() {
   );
 
   // connect FFT to audio Player
-  fft = new p5.FFT(0.8, 128);
+  fft = new p5.FFT(smoothing, numBins);
   audioPlayer.connect(fft);
 
   //  Based on width scaling
@@ -169,17 +171,17 @@ function draw() {
 //Thin 2
   push();
   translate(137,320);
-  drawTrapezoidLines(0, 18, 34, 52, 0, 20, 3, 255);
+  drawTrapezoidLines(0, 18, 34, 52, 0, trap3Height, trap1Spacing, trap1Alpha);
   pop();
 
   push();
   translate(176, 390);
-  drawTrapezoidLines(0, 18, 34, 52, 0, 20, 3, 255);
+  drawTrapezoidLines(0, 18, 34, 52, 0, trap3Height, trap1Spacing, trap1Alpha);
   pop();
 
   push();
   translate(212, 455);
-  drawTrapezoidLines(0, 18, 34, 52, 0, 20, 3, 255);
+  drawTrapezoidLines(0, 18, 34, 52, 0, trap3Height, trap1Spacing, trap1Alpha);
   pop();
 
 //Trapezoid3
