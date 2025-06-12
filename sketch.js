@@ -6,8 +6,8 @@ let smoothing = 0.8;
 
 function preload(){
   soundFormats('mp3', 'ogg');
+
 // Add AudioPlayer (From p5.js example:https://p5js.org/examples/imported-media-create-audio/)
-  
   audioPlayer = createAudio('/assets/Faith_in_Strangers.mp3');
 }
 
@@ -15,35 +15,41 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   background(247, 241, 225);
   
+  // Display the default audio control bar and set its position
   audioPlayer.showControls();
   audioPlayer.position(20,20)
 
+  // Add audio player description
   audioPlayer.attribute(
     'audio-description', 'The playback speed of this audio player is controlled by the position of the mouse. The further to the right the mouse is, the faster the audio will play.'
   );
 
-  // connect FFT to audio Player
+  // Connect FFT to audio Player
   fft = new p5.FFT(smoothing, numBins);
   audioPlayer.connect(fft);
 
-  //  Based on width scaling
-  scaleFactor = min(width / 800, height / 600);  // original scale
+  // Original scale
+  scaleFactor = min(width / 800, height / 600);  
 }
 
 function draw() {
   background(247, 241, 225); 
 
+  // Change playback speed based on mouse position
   audioPlayer.speed(1 + mouseX / windowWidth);
 
+  // Get spectrum data
   let spectrum = fft.analyze();
   let bass = fft.getEnergy("bass");
   let mid = fft.getEnergy("mid");
   let treble = fft.getEnergy("treble");
 
+  // Parameters for line
   let spacing = map(treble, 0, 255, 2, 5);
   let weight = map(bass, 0, 255, 0.5, 2,5);
   let alpha = map(mid, 0, 255, 60, 255);
 
+  // Parameters for trapezoid structures
   let trap1Spacing = map(treble, 0, 255, 2, 5);
   let trap1Alpha = map(mid, 0, 255, 80, 255); 
   let distortion = map(bass, 0, 255, -20, 20);
@@ -236,6 +242,7 @@ function draw() {
   pop();
 }
 
+// Draw a group of horizontal lines
 function drawLineGroup(x, y, len, count, spacing, weight, baseAlpha = 255) {
   strokeWeight(weight);
   for (let i = 0; i < count; i++) {
@@ -246,6 +253,7 @@ function drawLineGroup(x, y, len, count, spacing, weight, baseAlpha = 255) {
   }
 }
 
+// Draw a trapezoid shape using horizontal lines
 function drawTrapezoidLines(x1, x2, x3, x4, y, h, spacing = 3, alpha = 255) {
   stroke(0, alpha);
   strokeWeight(1);
@@ -257,6 +265,7 @@ function drawTrapezoidLines(x1, x2, x3, x4, y, h, spacing = 3, alpha = 255) {
   }
 }
 
+// Handle window resizing
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   scaleFactor = min(width / 800, height / 600);
