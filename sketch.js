@@ -1,5 +1,7 @@
 let scaleFactor;
 let audioPlayer;
+let fft;
+
 
 function preload(){
   soundFormats('mp3', 'ogg');
@@ -17,6 +19,10 @@ function setup() {
     'audio-description', 'The playback speed of this audio player is controlled by the position of the mouse. The further to the right the mouse is, the faster the audio will play.'
   );
 
+  //connect FFT to audio Player
+  fft = new p5.FFT(0.8, 128);
+  audioPlayer.connect(fft);
+
   //  Based on width scaling
   scaleFactor = min(width / 800, height / 600);  // original scale
 }
@@ -25,6 +31,15 @@ function draw() {
   background(247, 241, 225); 
 
   audioPlayer.speed(1 + mouseX / windowWidth);
+
+  let spectrum = fft.analyze();
+  let bass = fft.getEnergy("bass");
+  let mid = fft.getEnergy("mid");
+  let treble = fft.getEnergy("treble");
+
+  let spacing = map(treble, 0, 255, 2, 5);
+  let weight = map(bass, 0, 255, 0.5, 2,5);
+  let alpha = map(mid, 0, 255, 60, 255);
 
   push();
   // Move the centre
@@ -39,110 +54,110 @@ function draw() {
   // Thick 5
   push();
   translate(189, 343);       
-  drawLinGroup(0, 0, 495, 2, 1, 1, 200);  
+  drawLinGroup(0, 0, 495, 2, spacing, weight, alpha);  
   pop();
 
   push();
   translate(198, 360);
-  drawLinGroup(0, 0, 320, 2, 1, 1, 200);  
+  drawLinGroup(0, 0, 320, 2, spacing, weight, alpha);  
   pop();
 
  // Thick 6
   push();
   translate(445, 430);     
-  drawLinGroup(0, 0, 60, 4, 1, 1, 255); 
+  drawLinGroup(0, 0, 60, 4, spacing, weight, alpha); 
   pop();
 
   push();
   translate(440, 436);     
-  drawLinGroup(0, 0, 70, 4, 1, 1, 255); 
+  drawLinGroup(0, 0, 70, 4, spacing, weight, alpha); 
   pop();
 
  // Thick 7
   push();
   translate(130, 550);     
-  drawLinGroup(0, 0, 595, 2, 1, 1, 255); 
+  drawLinGroup(0, 0, 595, 2, spacing, weight, alpha); 
   pop();
 
  // Thick 8
   push();
   translate(432, 450);     
-  drawLinGroup(0, 0, 85, 8, 1, 1, 255); 
+  drawLinGroup(0, 0, 85, 8, spacing, weight, alpha); 
   pop();
 
   push();
   translate(135, 489);     
-  drawLinGroup(0, 0, 100, 3, 1, 1, 255); 
+  drawLinGroup(0, 0, 100, 3,spacing, weight, alpha); 
   pop();
 
 // Thick 1
   push();     
   translate(110, 383); 
-  drawLinGroup(0, 0, 80, 4, 1, 1, 255);  
+  drawLinGroup(0, 0, 80, 4, spacing, weight, alpha);  
   pop();
 
   push();
   translate(115, 392); 
-  drawLinGroup(0, 0, 80, 3, 1, 1, 255);
+  drawLinGroup(0, 0, 80, 3, spacing, weight, alpha);
   pop();
 
 // Thick 2
   push();
   translate(515, 315); 
-  drawLinGroup(0, 0, 170, 8, 1, 1, 255);
+  drawLinGroup(0, 0, 170, 8,spacing, weight, alpha);
   pop();
 
   push();
   translate(517, 350); 
-  drawLinGroup(0, 0, 170, 6, 1, 1, 255);
+  drawLinGroup(0, 0, 170, 6, spacing, weight, alpha);
   pop();
 
 // Thick 3
   push();
   translate(448, 316);
-  drawLinGroup(0, 0, 30, 8, 1, 1, 255);
+  drawLinGroup(0, 0, 30, 8, spacing, weight, alpha);
   pop();
 
   push();
   translate(432, 347);
-  drawLinGroup(0, 0, 50, 8, 1, 1, 255);
+  drawLinGroup(0, 0, 50, 8, spacing, weight, alpha);
   pop();
 
   push();
   translate(411, 380);
-  drawLinGroup(0, 0, 70, 5, 1, 1, 255);
+  drawLinGroup(0, 0, 70, 5, spacing, weight, alpha);
   pop();
 
 //Thick 4
   push();
   translate(190, 348);
-  drawLinGroup(0, 0, 190, 6, 1, 1, 255);
+  drawLinGroup(0, 0, 190, 6, spacing, weight, alpha);
   pop();
 
   push();
   translate(196, 364);
-  drawLinGroup(0, 0, 179, 6, 1, 1, 255);
+  drawLinGroup(0, 0, 179, 6, spacing, weight, alpha);
   pop();
 
   push();
   translate(240, 438);
-  drawLinGroup(0, 0, 20, 6, 1, 1, 255);
+  drawLinGroup(0, 0, 20, 6, spacing, weight, alpha);
   pop();
 
   push();
   translate(246, 452);
-  drawLinGroup(0, 0, 10, 6, 1, 1, 255);
+  drawLinGroup(0, 0, 10, 6, spacing, weight, alpha);
   pop();
 
 //Thin 1
   push();
   translate(125, 448);
-  drawLinGroup(0, 0, 600, 22, 2.5, 0.2, 120)
+  drawLinGroup(0, 0, 600, 22, spacing, weight, alpha)
   pop();
 
   push();
   translate(125,525);
-  drawLinGroup(0, 0, 600, 22, 2.5, 1, 255)
+  drawLinGroup(0, 0, 600, 22, spacing, weight, alpha)
   pop();
 
 //Thin 2
